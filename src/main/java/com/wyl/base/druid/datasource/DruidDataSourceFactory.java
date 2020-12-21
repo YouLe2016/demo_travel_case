@@ -1,4 +1,4 @@
-package com.wyl.druid.datasource;
+package com.wyl.base.druid.datasource;
 
 import com.alibaba.druid.pool.DruidDataSource;
 import org.apache.ibatis.datasource.pooled.PooledDataSourceFactory;

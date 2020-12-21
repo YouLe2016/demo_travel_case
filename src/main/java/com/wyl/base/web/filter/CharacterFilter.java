@@ -1,4 +1,4 @@
-package com.wyl.travel.web.filter;
+package com.wyl.base.web.filter;
 
 import javax.servlet.*;
 import javax.servlet.annotation.WebFilter;

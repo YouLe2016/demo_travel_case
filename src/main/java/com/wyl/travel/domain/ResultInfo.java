@@ -13,11 +13,14 @@ public class ResultInfo implements Serializable {
     //无参构造方法
     public ResultInfo() {
     }
+
     public ResultInfo(boolean flag) {
         this.flag = flag;
     }
+
     /**
      * 有参构造方法
+     *
      * @param flag
      * @param errorMsg
      */
@@ -25,8 +28,10 @@ public class ResultInfo implements Serializable {
         this.flag = flag;
         this.errorMsg = errorMsg;
     }
+
     /**
      * 有参构造方法
+     *
      * @param flag
      * @param data
      * @param errorMsg

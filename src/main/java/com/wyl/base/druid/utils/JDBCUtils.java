@@ -1,4 +1,4 @@
-package com.wyl.druid.utils;
+package com.wyl.base.druid.utils;
 
 import com.alibaba.druid.pool.DruidDataSourceFactory;
 
