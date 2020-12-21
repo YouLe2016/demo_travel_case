@@ -4,5 +4,4 @@ import com.wyl.travel.domain.Category
 
 interface CategoryService {
     fun findAll(): List<Category>
-
 }

@@ -89,4 +89,15 @@ class JedisTest {
             }
         }
     }
+
+    @Test
+    fun testTabCategory() {
+        JedisUtil.getJedis().use {
+            val key = "tab_category"
+            /*it.zrangeWithScores(key, 0, -1).forEach { item ->
+                println("${item.score} -- ${item.element}")
+            }*/
+            println(it.zrange(key, 0, -1).joinToString(","))
+        }
+    }
 }

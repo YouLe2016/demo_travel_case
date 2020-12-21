@@ -23,17 +23,14 @@ class CategoryServlet : BaseServlet() {
                 println("CategoryServlet -- 从数据库获取数据")
                 categories = categoryService.findAll()
                 val mutableMap = mutableMapOf<String, Double>()
-                categories.forEach { item ->
-                    mutableMap[item.cname] = item.cid.toDouble()
-                }
+                categories.forEach { item -> mutableMap[item.cname] = item.cid.toDouble() }
                 it.zadd(RedisKey, mutableMap)
             } else {
                 println("CategoryServlet -- 从Redis获取数据")
-                categories = set.map { item ->
-                    Category(item.score.toInt(), item.element)
-                }
+                categories = set.map { item -> Category(item.score.toInt(), item.element) }
             }
         }
+        categories.forEach { it.cid = 5 }
         writeJson(categories, resp)
     }
 }

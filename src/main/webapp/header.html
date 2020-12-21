@@ -9,7 +9,7 @@
         $.get("category/findAll", {}, function (data) {
             let content = '<li class="nav-active"><a href="index.html">首页</a></li>';
             for (let i = 0; i < data.length; i++) {
-                content += '<li><a href="route_list.html">' + data[i].cname + '</a></li>';
+                content += '<li><a href="route_list.html?cid=' + data[i].cid + '">' + data[i].cname + '</a></li>';
             }
             content += '<li><a href="favoriterank.html">收藏排行榜</a></li>';
             $("#ul-category").html(content);

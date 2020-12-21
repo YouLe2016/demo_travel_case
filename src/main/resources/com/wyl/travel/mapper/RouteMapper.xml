@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper
+        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wyl.travel.mapper.RouteMapper">
+
+    <select id="findRouteCount" resultType="int">
+        select count(*) from tab_route
+    </select>
+
+    <select id="pageQuery" resultType="Route">
+        SELECT * FROM tab_route where cid = #{cid} limit #{start},#{size}
+    </select>
+
+</mapper>
