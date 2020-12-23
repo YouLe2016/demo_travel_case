@@ -13,14 +13,18 @@ class RouteServlet : BaseServlet() {
 
     fun findAll(req: HttpServletRequest, resp: HttpServletResponse) {
         req.apply {
-            getParameter("cid").toIntOrNull()?.let { cid ->
-                var curPage = getParameter("currentPage")?.toIntOrNull()
-                if (curPage == null) curPage = 1
-                var pageSize = getParameter("pageSize")?.toIntOrNull()
-                if (pageSize == null) pageSize = 5
-                val pageBean = routeService.pageQuery(curPage, pageSize, cid)
-                writeJson(pageBean, resp)
-            }
+            val cid = getParameter("cid")?.toIntOrNull() ?: -1
+            val rname = getParameter("rname") ?: ""
+            val curPage = getParameter("currentPage")?.toIntOrNull() ?: 1
+            val pageSize = getParameter("pageSize")?.toIntOrNull() ?: 5
+            val pageBean = routeService.pageQuery(curPage, pageSize, cid, rname)
+            writeJson(pageBean, resp)
         }
+    }
+
+    fun findOne(req: HttpServletRequest, resp: HttpServletResponse) {
+        val rid = req.getParameter("rid")?.toIntOrNull() ?: -1
+        val route = routeService.findOne(rid)
+        writeJson(route, resp)
     }
 }

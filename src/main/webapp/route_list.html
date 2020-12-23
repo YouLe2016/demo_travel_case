@@ -9,26 +9,34 @@
     <link rel="stylesheet" type="text/css" href="css/common.css">
     <link rel="stylesheet" href="css/search.css">
     <script src="js/jquery-3.3.1.js"></script>
+    <script src="js/getParameter.js"></script>
 
     <script>
         $(function () {
-            let cid = location.search.split("=")[1];
-            // console.log(cid);
-            loadData(cid, 1);
+            // let cid = location.search.split("=")[1];
+
+            let cid = getParameter("cid");
+            let rname = getParameter("rname");
+            console.log(cid);
+            if (rname) {
+                rname = window.decodeURI(rname);
+            }
+            console.log(rname);
+            loadData(cid, rname, 1);
         });
 
-        function loadData(cid, currentPage) {
+        function loadData(cid, rname, currentPage) {
             console.log("currentpage = " + currentPage);
 
-            $.get("route/findAll", {cid: cid, currentPage: currentPage, pageSize: 10}, function (data) {
+            $.get("route/findAll", {cid: cid, currentPage: currentPage, rname: rname, pageSize: 10}, function (data) {
                 //分页工具条
                 $("#totalPage").html(data.totalPage);
                 $("#totalCount").html(data.totalCount);
                 let content = '<li class="threeword" ' +
-                    'onclick="loadData(' + cid + ',' + 1 + ');"' +
+                    'onclick="loadData(' + cid + ',\'' + rname + '\',' + 1 + ');"' +
                     '><a href="javascript:void(0)">首页</a></li>';
                 content += '<li class="threeword" ' +
-                    'onclick="loadData(' + cid + ',' + (data.currentPage - 1) + ');"' +
+                    'onclick="loadData(' + cid + ',\'' + rname + '\',' + (data.currentPage - 1) + ');"' +
                     '><a href="javascript:void(0)">上一页</a></li>';
 
                 let begin = data.currentPage - 5;
@@ -44,15 +52,15 @@
                         style = ' class="curPage"';
                     }
                     content += '<li ' +
-                        'onclick="loadData(' + cid + ',' + i + ');"' +
+                        'onclick="loadData(' + cid + ',\'' + rname + '\',' + i + ');"' +
                         style +
                         '><a href="javascript:void(0)">' + i + '</a></li>';
                 }
                 content += '<li class="threeword" ' +
-                    'onclick="loadData(' + cid + ',' + (data.currentPage + 1) + ');"' +
+                    'onclick="loadData(' + cid + ',\'' + rname + '\',' + (data.currentPage + 1) + ');"' +
                     '><a href="javascript:void(0)">下一页</a></li>';
                 content += '<li class="threeword" ' +
-                    'onclick="loadData(' + cid + ',' + (data.totalPage) + ');"' +
+                    'onclick="loadData(' + cid + ',\'' + rname + '\',' + data.totalPage + ');"' +
                     '><a href="javascript:void(0)">末页</a></li>';
                 $("#pageNum").html(content);
                 content = "";
@@ -72,7 +80,7 @@
                         '        <span>' + route.price + '</span>\n' +
                         '        <span>起</span>\n' +
                         '    </p>\n' +
-                        '    <p><a href="route_detail.html">查看详情</a></p>\n' +
+                        '    <p><a href="route_detail.html?rid=' + route.rid + '">查看详情</a></p>\n' +
                         '</div>\n' +
                         '</li>'
                 }

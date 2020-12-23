@@ -1,15 +1,47 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper
-        PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
-        "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+    PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN"
+    "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wyl.travel.mapper.RouteMapper">
 
-    <select id="findRouteCount" resultType="int">
+    <select id="findRouteCount" resultType="int" parameterType="map">
         select count(*) from tab_route
+        <where>
+            <if test="cid != -1">
+                and cid = #{cid}
+            </if>
+            <if test="rname != '' and rname != 'null'">
+                and rname like "%"#{rname}"%"
+            </if>
+        </where>
     </select>
 
-    <select id="pageQuery" resultType="Route">
-        SELECT * FROM tab_route where cid = #{cid} limit #{start},#{size}
+    <select id="pageQuery" resultType="Route" parameterType="map">
+        SELECT * FROM tab_route
+        <where>
+            <if test="cid != -1">
+                and cid = #{cid}
+            </if>
+            <if test="rname != '' and rname != 'null'">
+                and rname like "%"#{rname}"%"
+            </if>
+        </where>
+        limit #{start},#{size}
+    </select>
+
+    <resultMap id="routeMap" type="Route">
+        <!--<id property="rid" column="rid"/>
+        <result property="rname" column="rname"/>-->
+        <association property="seller" javaType="Seller"
+                     select="com.wyl.travel.mapper.SellerMapper.findSellerById"
+                     column="sid"/>
+        <collection
+            property="routeImgList" ofType="RouteImg"
+            select="com.wyl.travel.mapper.RouteImgMapper.findImageById"
+            column="rid"/>
+    </resultMap>
+    <select id="findRouteById" parameterType="int" resultMap="routeMap">
+        select * from tab_route where rid = #{rid}
     </select>
 
 </mapper>

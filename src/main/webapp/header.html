@@ -1,4 +1,5 @@
 <!-- 头部 start -->
+<script src="js/getParameter.js"></script>
 <script>
     $(function () {
         $.get("user/findUser", {}, function (data) {
@@ -15,6 +16,12 @@
             $("#ul-category").html(content);
         });
     });
+
+    function search_route() {
+        let content = $("#search_input").val();
+        let cid = getParameter("cid");
+        location.href = "route_list.html?cid=" + cid + "&rname=" + content;
+    }
 </script>
 <header id="header">
     <div class="top_banner">
@@ -39,8 +46,9 @@
                 <a href="/"><img src="images/logo.jpg" alt=""></a>
             </div>
             <div class="search">
-                <input name="" type="text" placeholder="请输入路线名称" class="search_input" autocomplete="off">
-                <a href="javascript:;" class="search-button">搜索</a>
+                <input name="" id="search_input" type="text" placeholder="请输入路线名称" class="search_input"
+                       autocomplete="off">
+                <a href="javascript:search_route()" class="search-button">搜索</a>
             </div>
             <div class="hottel">
                 <div class="hot_pic">
